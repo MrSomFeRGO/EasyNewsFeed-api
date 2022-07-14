@@ -31,7 +31,7 @@ public class UserController {
 
     UserDtoFactory userDtoFactory;
 
-    private static final String FETCH_USERS = "/api/users";
+    public static final String FETCH_USERS = "/api/users";
     public static final String CREATE_OR_UPDATE_USER = "/api/users";
     public static final String DELETE_USER = "/api/users/{user_id}";
 
