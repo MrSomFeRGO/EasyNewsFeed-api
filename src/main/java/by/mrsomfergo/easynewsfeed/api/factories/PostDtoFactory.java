@@ -29,6 +29,8 @@ public class PostDtoFactory {
                         .map(commentFactory::makeCommentDto)
                         .collect(Collectors.toList())
                 )
+                .createdAt(entity.getCreatedAt())
+                .authorId(entity.getAuthorId())
                 .build();
     }
 }
