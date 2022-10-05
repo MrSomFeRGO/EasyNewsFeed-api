@@ -7,5 +7,5 @@ import java.util.stream.Stream;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Stream<UserEntity> streamAll();
+    Stream<UserEntity> streamAllBy();
 }
