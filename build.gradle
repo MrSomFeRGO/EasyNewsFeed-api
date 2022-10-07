@@ -25,6 +25,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'commons-io:commons-io:2.6'
 }
 
 tasks.named('test') {
