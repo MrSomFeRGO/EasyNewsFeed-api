@@ -32,7 +32,7 @@ public class PostController {
 
     public static final String FETCH_POST = "/api/posts";
     public static final String CREATE_POST = "/api/posts";
-    public static final String UPDATE_PORT = "/api/posts/{post_id}";
+    public static final String UPDATE_POST = "/api/posts/{post_id}";
     public static final String DELETE_POST = "/api/posts/{post_id}";
 
     @GetMapping(FETCH_POST)
@@ -82,7 +82,7 @@ public class PostController {
         return postDtoFactory.makePostDto(savedPost);
     }
 
-    @PatchMapping(UPDATE_PORT)
+    @PatchMapping(UPDATE_POST)
     public PostDto updatePost(
             @PathVariable(name = "post_id") Long postId,
             @RequestParam(name = "post_like", required = false) Optional<Integer> optionalPostLike,
