@@ -22,8 +22,6 @@ public class CommentEntity {
 
     String content;
 
-    //String imageOrVideoUrl
-
     @Builder.Default
     Integer likes = 0;
 

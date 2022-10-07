@@ -14,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,11 +47,9 @@ public class PostController {
                     .map(postDtoFactory::makePostDto)
                     .collect(Collectors.toList());
         }
-
-        return optionalPostId.map(postId -> postRepository
-                .streamAllById(postId)
-                .map(postDtoFactory::makePostDto)
-                .toList()).orElseGet(() -> postRepository
+        return optionalPostId.map(postId -> Collections.singletonList(postDtoFactory.makePostDto(
+                controllerHelper.getPostOrThrowException(postId))))
+                .orElseGet(() -> postRepository
                 .streamAllByAuthorId(optionalAuthorId.get())
                 .map(postDtoFactory::makePostDto)
                 .collect(Collectors.toList()));
@@ -60,7 +59,10 @@ public class PostController {
     public PostDto createPost(
             @RequestParam(name = "post_title") String postTitle,
             @RequestParam(name = "post_content") String postContent,
-            @RequestParam(name = "post_author_id") Long postAuthorId){
+            @RequestParam(name = "post_author_id") Long postAuthorId,
+            @RequestParam(name = "post_file_url", required = false) Optional<String> optionalPostFileUrl){
+
+        optionalPostFileUrl = optionalPostFileUrl.filter(postFileUrl -> !postFileUrl.trim().isEmpty());
 
         if(postTitle.trim().isEmpty()){
             throw new BadRequestException("Post title can't be empty.");
@@ -69,12 +71,15 @@ public class PostController {
         }
 
         UserEntity user = controllerHelper.getUserOrThrowException(postAuthorId);
-        PostEntity post = PostEntity
+        PostEntity.PostEntityBuilder postBuilder = PostEntity
                 .builder()
                 .title(postTitle)
                 .authorId(postAuthorId)
-                .content(postContent)
-                .build();
+                .content(postContent);
+        optionalPostFileUrl
+                .ifPresent(postBuilder::imageOrVideoUrl);
+
+        PostEntity post = postBuilder.build();
         user.getPosts().add(post);
 
         PostEntity savedPost = postRepository.saveAndFlush(post);

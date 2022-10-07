@@ -23,6 +23,8 @@ public class PostDto {
     @NonNull
     String content;
 
+    String imageOrVideoUrl;
+
     @NonNull
     Integer like;
 

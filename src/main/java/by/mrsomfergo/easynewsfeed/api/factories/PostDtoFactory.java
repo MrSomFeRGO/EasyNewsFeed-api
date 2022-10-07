@@ -21,6 +21,7 @@ public class PostDtoFactory {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
+                .imageOrVideoUrl(entity.getImageOrVideoUrl())
                 .like(entity.getLikes())
                 .dislike(entity.getDislikes())
                 .comments(entity

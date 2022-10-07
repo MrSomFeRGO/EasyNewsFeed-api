@@ -26,7 +26,7 @@ public class PostEntity {
 
     String content;
 
-    //String imageOrVideoUrl;
+    String imageOrVideoUrl;
 
     @Builder.Default
     Integer likes = 0;
