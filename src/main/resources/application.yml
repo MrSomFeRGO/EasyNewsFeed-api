@@ -15,3 +15,7 @@ spring:
     properties:
       hibernate:
         default_schema: public
+  servlet:
+    multipart:
+      max-request-size: 10GB
+      max-file-size: 10GB
