@@ -31,9 +31,29 @@ public class UserController {
 
     UserDtoFactory userDtoFactory;
 
+    public static final String LOGIN_USER = "/api/users";
     public static final String FETCH_USERS = "/api/users";
     public static final String CREATE_OR_UPDATE_USER = "/api/users";
     public static final String DELETE_USER = "/api/users/{user_id}";
+
+    @PostMapping(LOGIN_USER)
+    public AckDto loginUser(
+            @RequestParam(value = "user_login") String userLogin,
+            @RequestParam(value = "user_password") String userPassword){
+
+        if(userLogin.isEmpty()) return AckDto.makeDefault(false);
+        if(userPassword.isEmpty()) return AckDto.makeDefault(false);
+
+        Optional<UserEntity> optionalUser = userRepository.findByLogin(userLogin);
+
+        if(optionalUser.isEmpty()) return AckDto.makeDefault(false);
+
+        UserEntity user = optionalUser.get();
+        if(Objects.equals(user.getLogin(), userLogin) && Objects.equals(user.getPassword(), userPassword))
+            return AckDto.makeDefault(true);
+
+        return AckDto.makeDefault(false);
+    }
 
     @GetMapping(FETCH_USERS)
     public List<UserDto> fetchUsers(
