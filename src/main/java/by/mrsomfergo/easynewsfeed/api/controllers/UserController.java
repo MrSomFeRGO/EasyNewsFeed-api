@@ -37,22 +37,22 @@ public class UserController {
     public static final String DELETE_USER = "/api/users/{user_id}";
 
     @PostMapping(LOGIN_USER)
-    public AckDto loginUser(
+    public UserDto loginUser(
             @RequestParam(value = "user_login") String userLogin,
             @RequestParam(value = "user_password") String userPassword){
 
-        if(userLogin.isEmpty()) return AckDto.makeDefault(false);
-        if(userPassword.isEmpty()) return AckDto.makeDefault(false);
+        if(userLogin.isEmpty()) throw new BadRequestException("Login can't be empty.");
+        if(userPassword.isEmpty()) throw new BadRequestException("Password can't be empty.");
 
         Optional<UserEntity> optionalUser = userRepository.findByLogin(userLogin);
 
-        if(optionalUser.isEmpty()) return AckDto.makeDefault(false);
+        if(optionalUser.isEmpty()) throw new BadRequestException("User not found!");
 
         UserEntity user = optionalUser.get();
         if(Objects.equals(user.getLogin(), userLogin) && Objects.equals(user.getPassword(), userPassword))
-            return AckDto.makeDefault(true);
+            return userDtoFactory.makeUserDto(user);
 
-        return AckDto.makeDefault(false);
+        throw new BadRequestException("Wrong password!");
     }
 
     @GetMapping(FETCH_USERS)
