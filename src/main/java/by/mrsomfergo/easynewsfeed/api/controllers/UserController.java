@@ -49,7 +49,7 @@ public class UserController {
         if(optionalUser.isEmpty()) throw new BadRequestException("User not found!");
 
         UserEntity user = optionalUser.get();
-        if(Objects.equals(user.getLogin(), userLogin) & Objects.equals(user.getPassword(), userPassword))
+        if(Objects.equals(user.getLogin(), userLogin) && Objects.equals(user.getPassword(), userPassword))
             return userDtoFactory.makeUserDto(user);
 
         throw new BadRequestException("Wrong password!");
@@ -85,13 +85,13 @@ public class UserController {
 
         boolean isCreate = optionalUserId.isEmpty();
 
-        if(isCreate & optionalUserLogin.isEmpty()){
+        if(isCreate && optionalUserLogin.isEmpty()){
             throw new BadRequestException("Login can't be empty.");
         }
-        if(isCreate & optionalUserPassword.isEmpty()){
+        if(isCreate && optionalUserPassword.isEmpty()){
             throw new BadRequestException("Password can't be empty.");
         }
-        if(isCreate & optionalUserName.isEmpty()){
+        if(isCreate && optionalUserName.isEmpty()){
             throw new BadRequestException("Name can't be empty.");
         }
 

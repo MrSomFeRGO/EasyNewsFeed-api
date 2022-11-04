@@ -75,7 +75,7 @@ public class CommentController {
             @RequestParam(name = "cooment_like", required = false) Optional<Integer> optionalCommentLike,
             @RequestParam(name = "cooment_dislike", required = false) Optional<Integer> optionalCommentDislike){
 
-        if(optionalCommentLike.isEmpty() & optionalCommentDislike.isEmpty()) throw new BadRequestException("Like and Dislike can't be empty.");
+        if(optionalCommentLike.isEmpty() && optionalCommentDislike.isEmpty()) throw new BadRequestException("Like and Dislike can't be empty.");
 
         CommentEntity comment = controllerHelper.getCommentOrThrowException(commentId);
 

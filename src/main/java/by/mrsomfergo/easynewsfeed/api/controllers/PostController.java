@@ -41,7 +41,7 @@ public class PostController {
             @RequestParam(name = "post_id", required = false) Optional<Long> optionalPostId,
             @RequestParam(name = "author_id", required = false) Optional<Long> optionalAuthorId){
 
-        if(optionalAuthorId.isEmpty() & optionalPostId.isEmpty()){
+        if(optionalAuthorId.isEmpty() && optionalPostId.isEmpty()){
             return postRepository
                     .streamAllBy()
                     .map(postDtoFactory::makePostDto)
@@ -93,7 +93,7 @@ public class PostController {
             @RequestParam(name = "post_like", required = false) Optional<Integer> optionalPostLike,
             @RequestParam(name = "post_dislike", required = false) Optional<Integer> optionalPostDislike){
 
-        if(optionalPostLike.isEmpty() & optionalPostDislike.isEmpty()) throw new BadRequestException("Like and Dislike can't be empty.");
+        if(optionalPostLike.isEmpty() && optionalPostDislike.isEmpty()) throw new BadRequestException("Like and Dislike can't be empty.");
 
         PostEntity post = controllerHelper.getPostOrThrowException(postId);
 
